@@ -10,7 +10,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t devops-capstone:v1 .'
+                bat 'docker build -t devops-capstone:v1 .'
             }
         }
     }
