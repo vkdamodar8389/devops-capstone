@@ -41,7 +41,7 @@ pipeline {
     steps {
         sshagent(credentials: ['ec2-ssh']) {
             bat """
-            ssh -o StrictHostKeyChecking=no ubuntu@<EC2_PUBLIC_IP> ^
+            ssh -o StrictHostKeyChecking=no ubuntu@98.91.17.173 ^
             docker pull vkdamodar8389/devops-capstone:v1 && ^
             docker stop capstone || exit 0 && ^
             docker rm capstone || exit 0 && ^
