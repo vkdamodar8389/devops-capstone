@@ -37,6 +37,20 @@ pipeline {
         stage('Push Image to Docker Hub') {
             steps {
                 bat "docker push %IMAGE_NAME%:%IMAGE_TAG%"
+		stage('Deploy to EC2') {
+    steps {
+        sshagent(credentials: ['ec2-ssh']) {
+            bat """
+            ssh -o StrictHostKeyChecking=no ubuntu@<EC2_PUBLIC_IP> ^
+            docker pull vkdamodar8389/devops-capstone:v1 && ^
+            docker stop capstone || exit 0 && ^
+            docker rm capstone || exit 0 && ^
+            docker run -d --name capstone -p 80:80 vkdamodar8389/devops-capstone:v1
+            """
+        }
+    }
+}
+
  
             }
         }
